@@ -24,7 +24,6 @@ class MyCommandDestroyHandler(adsk.core.CommandEventHandler):
         super().__init__()
     def notify(self, args):
         try:
-#            faces = []                        
             #Iterate through selection and cast Selection elements to Faces
             if faceSelection:
                 faceSelectionList = []
@@ -40,7 +39,6 @@ class MyCommandDestroyHandler(adsk.core.CommandEventHandler):
                 nameCounter = 1
                 for f in faceSelectionList:
                     fCast = adsk.fusion.BRepFace.cast(f.entity)
-#                    faces.append(fCast)    
                     sketch = sketches.add(fCast)
                     sketch.name = 'DXF_sketch' + str(nameCounter)
                     dxfSketches.append(sketch)
@@ -55,8 +53,8 @@ class MyCommandDestroyHandler(adsk.core.CommandEventHandler):
                     _ui.messageBox('no path selected.')
                 
                                     
-#            else:
-#                _ui.messageBox('no faces selected.')                
+            else:
+                _ui.messageBox('no faces selected.')                
             
             # When the command is done, terminate the script
             # This will release all globals which will remove all event handlers
@@ -150,10 +148,7 @@ def run(context):
         onCommandCreated = MyCommandCreatedHandler()
         cmdDef.commandCreated.add(onCommandCreated)
         _handlers.append(onCommandCreated)
-        
-        #test
-        cmdDef.isOkButtonVisible(False)        
-        
+                
         # Execute the command definition.
         cmdDef.execute()
 
